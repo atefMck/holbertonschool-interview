@@ -1,10 +1,6 @@
 #!/usr/bin/python3
 def canUnlockAll(boxes):
     """check if all boxes can be opened"""
-    if type(boxes) != list:
-        return False
-    if len(boxes) == 0:
-        return False
     keys = [i for i in boxes[0]]
     can_unlock = [False for i in boxes]
     can_unlock[0] = True
@@ -21,6 +17,4 @@ def canUnlockAll(boxes):
                             keys += [k]
             else:
                 can_unlock[i] = False
-    print(keys)
-    print(can_unlock)
     return all(can_unlock)
