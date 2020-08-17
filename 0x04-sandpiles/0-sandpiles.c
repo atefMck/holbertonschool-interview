@@ -30,23 +30,17 @@ printf("\n");
  */
 void sandpiles_sum(int grid1[3][3], int grid2[3][3])
 {
-grid_sum(grid1, grid2);
-while (!is_stable(grid1))
-topple(grid1);
-}
-
-/**
- * grid_sum - sums 2 3x3 grid
- * @grid1: first grid
- * @grid2: second grid
- */
-void grid_sum(int grid1[3][3], int grid2[3][3])
-{
 int i, j;
 for (i = 0; i < 3; i++)
 {
 for (j = 0; j < 3; j++)
 grid1[i][j] += grid2[i][j];
+}
+while (!is_stable(grid1))
+{
+printf("=\n");
+print_grid(grid1);
+topple(grid1);
 }
 }
 
@@ -57,13 +51,13 @@ grid1[i][j] += grid2[i][j];
 void topple(int grid[3][3])
 {
 int i, j;
-printf("=\n");
-print_grid(grid);
+int new_gird[3][3];
+copy_grid(grid, new_gird);
 for (i = 0; i < 3; i++)
 {
 for (j = 0; j < 3; j++)
 {
-if (grid[i][j] > 3)
+if (new_gird[i][j] > 3)
 {
 grid[i][j] -= 4;
 if (i + 1 < 3)
@@ -100,3 +94,19 @@ return (0);
 return (1);
 }
 
+/**
+ * copy_grid - copies a grid
+ *
+ * @grid: grid to copy
+ * @new_grid: destination grid
+ * Return: a copy of the grid
+ */
+void copy_grid(int grid[3][3], int new_grid[3][3])
+{
+int i, j;
+for (i = 0; i < 3; i++)
+{
+for (j = 0; j < 3; j++)
+new_grid[i][j] = grid[i][j];
+}
+}
