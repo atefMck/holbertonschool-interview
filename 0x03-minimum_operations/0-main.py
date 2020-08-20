@@ -14,3 +14,6 @@ print("Min number of operations to reach {} characters: {}".format(n, minOperati
 
 n = 19170307
 print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))
+
+n = 2147483640
+print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))

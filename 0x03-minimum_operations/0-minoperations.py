@@ -9,8 +9,10 @@ def minOperations(n):
     Calculates the fewest number of operations needed to result n characters
     """
     op_count = 0
-    for i in range(2, n):
+    i = 2
+    while n > 1:
         while n % i == 0:
             op_count += i
             n = n // i
+        i += 1
     return op_count
