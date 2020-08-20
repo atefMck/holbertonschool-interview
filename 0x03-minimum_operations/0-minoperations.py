@@ -6,8 +6,7 @@ Minimum operations module
 
 def minOperations(n):
     """
-    Calculates the fewest number of operations 
-    needed to result n characters
+    Calculates the fewest number of operations needed to result n characters
     """
     op_count = 0
     while n != 1:
