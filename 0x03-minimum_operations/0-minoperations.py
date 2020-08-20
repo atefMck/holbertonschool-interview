@@ -14,11 +14,12 @@ def minOperations(n):
         return 0
     if n <= 0:
         return 0
-    while n != 1:
-        if n % 2 == 1:
-            n = n - 1
+    tmp = n
+    while tmp != 1:
+        if tmp % 2 == 1:
+            tmp = tmp - 1
             op_count = op_count + 1
         else:
-            n = n // 2
+            tmp = tmp // 2
             op_count = op_count + 2
     return op_count
