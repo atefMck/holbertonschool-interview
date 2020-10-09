@@ -9,33 +9,86 @@
  */
 heap_t *heap_insert(heap_t **root, int value)
 {
-	binary_tree_t *test, *tmp;
-	tmp = *root;
-	test = insert_into_first_place(tmp, value);
+	binary_tree_t *test;
+	test = insert_into_first_place(root, value);
 	return test;
 }
 
 
-binary_tree_t *insert_into_first_place(binary_tree_t *root, int value) {
-	binary_tree_t *new_node;
-	if (root == NULL)
+binary_tree_t *insert_into_first_place(heap_t **root, int value) {
+	binary_tree_t *new_node, *tmp;
+	tmp = *root;
+	if (tmp)
+	printf("%d", tmp->n);
+	if (tmp == NULL)
 	{
-		printf("yooo");
 		new_node = binary_tree_node(NULL, value);
-		root = new_node;
+		*root = new_node;
 		return new_node;
 	}
-	else if (root->left == NULL || root->right == NULL) 
+	else if (tmp->left == NULL) 
     {
-		printf("yooo");
-		new_node = binary_tree_node(root, value);
+		new_node = binary_tree_insert_left(tmp, value);
 		return new_node;
 	} 
+	else if (tmp->right == NULL) 
+	{
+		new_node = binary_tree_insert_right(tmp, value);
+		return new_node;
+	}
     else
     { 
-		printf("yeeee");
-        insert_into_first_place(root->left, value); 
-        insert_into_first_place(root->right, value); 
+        insert_into_first_place(&tmp->left, value); 
+        insert_into_first_place(&tmp->right, value); 
     }
 	return NULL;
+}
+
+
+/**
+* binary_tree_insert_left - Entry point
+* @parent : The parent.
+* @value : The value of the node.
+* Return: Always 0 (Success)
+*/
+binary_tree_t *binary_tree_insert_left(binary_tree_t *parent, int value)
+{
+binary_tree_t *new;
+if (!parent)
+return (NULL);
+new = malloc(sizeof(binary_tree_t));
+if (!new)
+return (NULL);
+new->n = value;
+new->parent = parent;
+new->left = parent->left;
+new->right = NULL;
+parent->left = new;
+if (new->left)
+new->left->parent = new;
+return (new);
+}
+
+/**
+* binary_tree_insert_right - Entry point
+* @parent : The parent.
+* @value : The value of the node.
+* Return: Always 0 (Success)
+*/
+binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
+{
+binary_tree_t *new;
+if (!parent)
+return (NULL);
+new = malloc(sizeof(binary_tree_t));
+if (!new)
+return (NULL);
+new->n = value;
+new->parent = parent;
+new->right = parent->right;
+new->left = NULL;
+parent->right = new;
+if (new->right)
+new->right->parent = new;
+return (new);
 }
