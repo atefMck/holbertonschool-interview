@@ -3,6 +3,7 @@
 UTF-8 Validator Module
 """
 
+
 def validUTF8(data):
     num_bytes = 0
     for integer in data:
@@ -21,7 +22,7 @@ def validUTF8(data):
         else:
             if bin[0] != 1 or bin[1] != 0:
                 return False
-        
+
         num_bytes -= 1
-    
-    return num_bytes == 0   
+
+    return num_bytes == 0
