@@ -9,9 +9,8 @@ def canUnlockAll(boxes):
             if j < len(boxes):
                 for k in boxes[j]:
                     if k not in keys:
-                        keys.append(k) 
-    for k in range(len(boxes)):
+                        keys.append(k)
+    for k in needed_keys:
         if k not in keys:
             return False
     return True
-
