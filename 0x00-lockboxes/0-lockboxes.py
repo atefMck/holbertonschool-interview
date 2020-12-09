@@ -6,7 +6,6 @@ def canUnlockAll(boxes):
     for j in keys:
         if j < len(boxes):
             for k in boxes[j]:
-                print(k)
                 if k not in keys:
                     keys.append(k)
     for k in needed_keys:
