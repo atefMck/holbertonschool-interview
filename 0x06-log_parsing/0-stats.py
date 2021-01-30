@@ -39,9 +39,9 @@ try:
                 status_code[array[3]] += 1
         if i == 10:
             print("File size: {}".format(size))
-            for k, v in sorted(status_code):
-                if v != 0:
-                    print("{}: {}".format(k, v))
+            for k in sorted(status_code):
+                if status_code[k] != 0:
+                    print("{}: {}".format(k, status_code[k]))
             i = 0
 except Exception:
     pass
