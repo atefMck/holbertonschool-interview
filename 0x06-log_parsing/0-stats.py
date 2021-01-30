@@ -5,14 +5,17 @@
 
 import sys
 
+
 def parse_data(data):
-    data = data.replace(' "GET /projects/260 HTTP/1.1"', "").replace(' -', "").replace('[', "").replace(']', "")
+    data = data.replace(' "GET /projects/260 HTTP/1.1"',
+                        "").replace(' -', "").replace('[', "").replace(']', "")
     if data.count("-") == 3:
         data = data.replace('-', " ", 1)
     array = data.split()
     if len(array) != 5:
         return
     return array
+
 
 i = 0
 size = 0
@@ -36,10 +39,10 @@ try:
                 status_code[array[3]] += 1
         if i == 10:
             print("File size: {}".format(size))
-            for k,v in sorted(status_code):
+            for k, v in sorted(status_code):
                 if v != 0:
                     print("{}: {}".format(k, v))
-            i = 0     
+            i = 0
 except Exception:
     pass
 finally:
@@ -48,4 +51,3 @@ finally:
         if status_code[k] != 0:
             print("{}: {}".format(k, status_code[k]))
     i = 0
-
