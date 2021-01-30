@@ -3,49 +3,49 @@
     Computes stdin input
 """
 
-
 import sys
 
+def parse_data(data):
+    data = data.replace(' "GET /projects/260 HTTP/1.1"', "").replace(' -', "").replace('[', "").replace(']', "")
+    if data.count("-") == 3:
+        data = data.replace('-', " ", 1)
+    array = data.split()
+    if len(array) != 5:
+        return
+    return array
 
-def addFileSize(data):
-    return int(data.split()[8])
-
-
-def codes(data):
-    return data.split()[7]
-
-counter = 0
-total_size = 0
-code_status = {
-    '200': 0,
-    '301': 0,
-    '400': 0,
-    '401': 0,
-    '403': 0,
-    '404': 0,
-    '405': 0,
-    '500': 0
+i = 0
+size = 0
+status_code = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
 }
-
 try:
     for line in sys.stdin:
-        counter += 1
-        total_size += addFileSize(line)
-        code = codes(line)
-        if code in code_status:
-            code_status[code] += 1
-        if counter == 10:
-            print("File size: {:d}".format(total_size))
-            for code, value in sorted(code_status.items()):
-                if value > 0:
-                    print("{}: {:d}".format(code, value))
-            counter = 0
+        i += 1
+        array = parse_data(line)
+        if array:
+            size += int(array[4])
+            if array[3] in status_code.keys():
+                status_code[array[3]] += 1
+        if i == 10:
+            print("File size: {}".format(size))
+            for k,v in sorted(status_code):
+                if v != 0:
+                    print("{}: {}".format(k, v))
+            i = 0     
 except Exception:
     pass
-
 finally:
-    print("File size: {:d}".format(total_size))
-    for code, value in sorted(code_status.items()):
-        if value > 0:
-            print("{}: {:d}".format(code, value))
-    counter = 0
+    print("File size: {}".format(size))
+    for k in sorted(status_code):
+        if status_code[k] != 0:
+            print("{}: {}".format(k, status_code[k]))
+    i = 0
+
