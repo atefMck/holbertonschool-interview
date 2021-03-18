@@ -117,7 +117,7 @@ class Board:
 
     def resetBoard(self):
         self.matrix = [["." for x in range(size)] for y in range(size)]
-    
+
     def solveNQueens(self):
         for i in range(self.size):
             for j in range(self.size):
@@ -149,8 +149,9 @@ if __name__ == "__main__":
             queen.trimBoard(board)
             board.placeQueen(queen)
             board.solveNQueens()
-            if len(board.getQueens()) == size and board.getQueens() not in solutions:
-                solutions.append(board.getQueens())
+            if len(board.getQueens()) == size:
+                if board.getQueens() not in solutions:
+                    solutions.append(board.getQueens())
 
     for i in solutions:
         print(i)
