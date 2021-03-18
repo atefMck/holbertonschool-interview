@@ -14,7 +14,7 @@ class Queen:
         self.y = y
         self.rep = 'Q'
 
-    def checkColision(self, board, debug=False):
+    def trimBoard(self, board, debug=False):
         """brudda osas is da real brudda"""
         atx = self.x + 1
         aty = self.y
@@ -28,8 +28,7 @@ class Queen:
             if debug:
                 print("Checking [{}, {}] = {}"
                       .format(atx, aty, board.get(atx, aty) == 'Q'))
-            if type(board.get(atx, aty)) is not str:
-                return True
+            board.matrix[aty][atx] = 'x'
             atx += 1
 
         if debug:
@@ -44,8 +43,7 @@ class Queen:
             if debug:
                 print("Checking [{}, {}] = {}".format(
                     atx, aty, board.get(atx, aty) == 'Q'))
-            if type(board.get(atx, aty)) is not str:
-                return True
+            board.matrix[aty][atx] = 'x'
             aty += 1
 
         if debug:
@@ -64,8 +62,7 @@ class Queen:
             if debug:
                 print("Checking [{}, {}] = {}".format(
                     atx, aty, board.get(atx, aty) == 'Q'))
-            if type(board.get(atx, aty)) is not str:
-                return True
+            board.matrix[aty][atx] = 'x'
             atx += 1
             aty += 1
 
@@ -87,12 +84,9 @@ class Queen:
             if debug:
                 print("Checking [{}, {}] = {}".format(
                     atx, aty, board.get(atx, aty) == 'Q'))
-            if type(board.get(atx, aty)) is not str:
-                return True
+            board.matrix[aty][atx] = 'x'
             atx -= 1
             aty += 1
-
-        return False
 
 
 class Board:
@@ -102,7 +96,7 @@ class Board:
         self.matrix = [["." for x in range(size)] for y in range(size)]
 
     def placeQueen(self, Queen):
-        self.matrix[Queen.y][Queen.x] = Queen
+        self.matrix[Queen.y][Queen.x] = 'Q'
 
     def get(self, x, y):
         return self.matrix[y][x]
@@ -110,22 +104,27 @@ class Board:
     def printBoard(self):
         for i in range(self.size):
             for j in range(self.size):
-                if type(self.matrix[i][j]) is str:
-                    print(" . ", end="")
-                else:
-                    print(" {} ".format(self.matrix[i][j].rep), end="")
+                print(" {} ".format(self.matrix[i][j]), end="")
             print()
 
     def getQueens(self):
         queens = []
         for i in range(self.size):
             for j in range(self.size):
-                if type(self.matrix[j][i]) is not str:
-                    queens.append([self.matrix[j][i].x, self.matrix[j][i].y])
+                if self.matrix[j][i] == 'Q':
+                    queens.append([i, j])
         return queens
 
     def resetBoard(self):
         self.matrix = [["." for x in range(size)] for y in range(size)]
+    
+    def solveNQueens(self):
+        for i in range(self.size):
+            for j in range(self.size):
+                if self.matrix[j][i] != 'x':
+                    queen = Queen(i, j)
+                    queen.trimBoard(self)
+                    self.placeQueen(queen)
 
 
 if __name__ == "__main__":
@@ -146,16 +145,12 @@ if __name__ == "__main__":
     for i in range(size):
         for j in range(size):
             board.resetBoard()
-            board.placeQueen(Queen(j, i))
-            for k in range(size):
-                for c in range(size):
-                    if not (k == i and c == j):
-                        queen = Queen(c, k)
-                        if not queen.checkColision(board):
-                            board.placeQueen(queen)
-            sol = board.getQueens()
-            if len(sol) == size and sol not in solutions:
-                solutions.append(sol)
+            queen = Queen(i, j)
+            queen.trimBoard(board)
+            board.placeQueen(queen)
+            board.solveNQueens()
+            if len(board.getQueens()) == size and board.getQueens() not in solutions:
+                solutions.append(board.getQueens())
 
     for i in solutions:
         print(i)
