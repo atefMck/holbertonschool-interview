@@ -14,22 +14,23 @@
  */
 avl_t *create_node(int *array, avl_t *parent, int start, int end)
 {
-    int mid;
-    avl_t *newNode;
-    if (start > end)
-    return NULL;
-    mid = (start + end) / 2;
+	int mid;
+	avl_t *newNode;
 
-    newNode = malloc(sizeof(avl_t));
-    if (!newNode)
-    return NULL;
+	if (start > end)
+	return (NULL);
+	mid = (start + end) / 2;
 
-    newNode->n = array[mid];
-    newNode->parent = parent;
-    newNode->left = create_node(array, newNode, start, mid - 1);
-    newNode->right = create_node(array, newNode, mid + 1, end);
+	newNode = malloc(sizeof(avl_t));
+	if (!newNode)
+	return (NULL);
 
-    return newNode;
+	newNode->n = array[mid];
+	newNode->parent = parent;
+	newNode->left = create_node(array, newNode, start, mid - 1);
+	newNode->right = create_node(array, newNode, mid + 1, end);
+
+	return (newNode);
 }
 
 
@@ -42,22 +43,22 @@ avl_t *create_node(int *array, avl_t *parent, int start, int end)
  */
 avl_t *sorted_array_to_avl(int *array, size_t size)
 {
-    int mid, start, end;
-    avl_t *head;
-    
-    if (!array)
-    return NULL;
+	int mid, start, end;
+	avl_t *head;
 
-    start = 0;
-    end = size - 1;
-    mid = (start + end) / 2;
+	if (!array)
+	return (NULL);
 
-    head = malloc(sizeof(avl_t));
-    if (!head)
-    return NULL;
-    head->n = array[mid];
-    head->parent = NULL;
-    head->left = create_node(array, head, start, mid -1);
-    head->right = create_node(array, head, mid + 1, end);
-    return head;
+	start = 0;
+	end = size - 1;
+	mid = (start + end) / 2;
+
+	head = malloc(sizeof(avl_t));
+	if (!head)
+	return (NULL);
+	head->n = array[mid];
+	head->parent = NULL;
+	head->left = create_node(array, head, start, mid - 1);
+	head->right = create_node(array, head, mid + 1, end);
+	return (head);
 }
