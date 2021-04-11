@@ -42,7 +42,10 @@ skiplist_t *linear_skip(skiplist_t *list, int value)
             return (NULL);
         }
         else if (express->n == value)
-        return (express);
+        {
+            printf("Value found between indexes [%ld] and [%ld]\n", tmp->index, express->index);
+            return (express);
+        }
     }
     return (NULL);
 }
