@@ -1,5 +1,4 @@
 #!/usr/bin/node
-const { rejects } = require('assert');
 const request = require('request');
 
 const movieId = process.argv[2];
