@@ -1,5 +1,4 @@
 #include "sort.h"
-#define swap(x, y) { int temp = x; x = y; y = temp; }
 
 
 /**
