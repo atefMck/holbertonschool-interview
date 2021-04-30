@@ -5,7 +5,8 @@
 /**
 * heapify - heapifies an array
 * @array: the array to sort
-* @n: array size
+* @size: array size
+* @calcsize: array size
 * @idx: index of the root
 * Return: 1 if n is palindrome, 0 otherwise
 */
@@ -31,7 +32,7 @@ void heapify(int *array, size_t size, size_t calcsize, int idx)
 /**
 * heap_sort - function that sorts an array using heap sort
 * @array: the array to sort
-* @n: array size
+* @size: array size
 * Return: 1 if n is palindrome, 0 otherwise
 */
 void heap_sort(int *array, size_t size)
