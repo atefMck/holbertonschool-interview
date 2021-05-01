@@ -37,7 +37,7 @@ int search_in_array(int *array, int start, int end, int value)
     {
         if (array[mid] == value && end == start)
         return (mid);
-
+        print_array(array, start, end);
         if (array[mid] < value)
         {
             s = mid + 1;
@@ -48,7 +48,7 @@ int search_in_array(int *array, int start, int end, int value)
             s = start;
             e = mid;
         }
-        print_array(array, s, e);
+        
         return (search_in_array(array, s, e, value));
     }
     return (-1);
@@ -67,6 +67,5 @@ int advanced_binary(int *array, size_t size, int value)
     return (-1);
     if (!value)
     return (-1);
-    print_array(array, 0, ((int) size) - 1);
     return (search_in_array(array, 0, ((int) size) - 1, value));
 }
