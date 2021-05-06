@@ -38,4 +38,5 @@ def count_words(subreddit, word_list, word_count={}, after=""):
                     word.lower())
         count_words(subreddit, word_list, word_count, after)
     else:
+        print()
         return None
