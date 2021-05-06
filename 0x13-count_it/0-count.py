@@ -2,7 +2,6 @@
 """Tags counting module"""
 
 import requests
-import re
 
 
 def count_words(subreddit, word_list, word_count={}, after=""):
