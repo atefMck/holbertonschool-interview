@@ -12,11 +12,11 @@ def count_words(subreddit, word_list, word_count={}, after=""):
             word_count[word.lower()] = 0
 
     if after is None:
-        sorted_word_count = dict(
-            sorted(
-                word_count.items(),
-                key=lambda count: count[1],
-                reverse=True))
+        sorted_word_count = dict(sorted(
+            word_count.items(),
+            key=lambda x: (x[1], x[0]),
+            reverse=True
+            ))
         for k, v in sorted_word_count.items():
             if v > 0:
                 print("{}: {}".format(k, v))
