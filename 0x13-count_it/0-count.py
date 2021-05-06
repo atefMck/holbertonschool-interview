@@ -4,6 +4,7 @@
 import requests
 import re
 
+
 def count_words(subreddit, word_list, word_count={}, after=""):
     """Counts words"""
     if len(word_count) <= 0:
@@ -11,7 +12,11 @@ def count_words(subreddit, word_list, word_count={}, after=""):
             word_count[word.lower()] = 0
 
     if after is None:
-        sorted_word_count = dict(sorted(word_count.items(), key=lambda count: count[1], reverse=True))
+        sorted_word_count = dict(
+            sorted(
+                word_count.items(),
+                key=lambda count: count[1],
+                reverse=True))
         for k, v in sorted_word_count.items():
             print("{}: {}".format(k, v))
         return None
@@ -19,15 +24,18 @@ def count_words(subreddit, word_list, word_count={}, after=""):
     url = "https://api.reddit.com/r/{}/hot".format(subreddit)
     params = {'limit': 100, 'after': after}
     headers = {'user-agent': 'counting-app'}
-    response = requests.get(url, headers=headers, params=params, allow_redirects=False)
+    response = requests.get(url, headers=headers,
+                            params=params, allow_redirects=False)
 
     if response.status_code == 200:
         after = response.json().get("data").get("after")
         children = response.json().get("data").get("children")
         for child in children:
-            title_words_lower = child.get("data").get("title").lower().split(" ")
+            title_words_lower = child.get("data").get(
+                "title").lower().split(" ")
             for word in word_list:
-                word_count[word.lower()] += title_words_lower.count(word.lower())
+                word_count[word.lower()] += title_words_lower.count(
+                    word.lower())
         count_words(subreddit, word_list, word_count, after)
     else:
         return None
