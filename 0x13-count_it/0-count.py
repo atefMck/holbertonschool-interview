@@ -18,7 +18,8 @@ def count_words(subreddit, word_list, word_count={}, after=""):
                 key=lambda count: count[1],
                 reverse=True))
         for k, v in sorted_word_count.items():
-            print("{}: {}".format(k, v))
+            if v > 0:
+                print("{}: {}".format(k, v))
         return None
 
     url = "https://api.reddit.com/r/{}/hot".format(subreddit)
