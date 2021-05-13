@@ -12,11 +12,9 @@
  */
 int swap_nodes(heap_t *node_a, heap_t *node_b)
 {
-  heap_t *tmp = node_a;
-  if (!node_a || ! node_b)
-  return (0);
-  node_a = node_b;
-  node_b = tmp;
+  int tmp = node_a->n;
+  node_a->n = node_b->n;
+  node_b->n = tmp;
   return (1);
 }
 
@@ -30,11 +28,19 @@ heap_t *get_min_heap(heap_t *root)
   heap_t *tmp = root;
   if (!tmp)
   return (0);
-  if (tmp->left && tmp->n < tmp->left->n)
-  get_min_heap(tmp->left);
-  else if (tmp->right && tmp->n < tmp->right->n)
-  get_min_heap(tmp->right);
+  if (!tmp->left && !tmp->right)
   return (tmp);
+  else if (tmp->left && tmp->right) 
+  {
+    if (tmp->left->n >= tmp->right->n)
+    get_min_heap(tmp->left);
+    else
+    get_min_heap(tmp->right);
+  }
+  else if (tmp->left && !tmp->right)
+  return (tmp->left);
+  else if (!tmp->left && tmp->right)
+  return (tmp->right);
 }
 
 /**
@@ -47,15 +53,15 @@ void heapify(heap_t *root)
   heap_t *tmp = root;
   if (!tmp)
   return;
-  if (tmp->left && tmp->n < tmp->left->n)
+  if (tmp->left && (tmp->n < tmp->left->n))
   {
     swap_nodes(tmp, tmp->left);
-    heapify(tmp);
+    heapify(tmp->left);
   }
-  else if (tmp->right && tmp->n < tmp->right->n)
+  else if (tmp->right && (tmp->n < tmp->right->n))
   {
     swap_nodes(tmp, tmp->right);
-    heapify(tmp);
+    heapify(tmp->right);
   }
   else
   return;
@@ -69,15 +75,20 @@ void heapify(heap_t *root)
  */
 int heap_extract(heap_t **root)
 {
-  heap_t *tmp = (void *) root;
+  heap_t *tmp = *root;
   heap_t *min;
   int extracted;
   if (!tmp)
   return (0);
   extracted = tmp->n;
   min = get_min_heap(tmp);
+  printf("Min heap: %d\n", min->n);
   swap_nodes(tmp, min);
-  free(tmp);
-  heapify(min);
+  if (min->parent->left == min)
+		min->parent->left = NULL;
+	else
+		min->parent->right = NULL;
+  free(min);
+  heapify(tmp);
   return (extracted);
 }
