@@ -4,6 +4,8 @@
 
 def makeChange(coins, total):
     ''' boooooo '''
+    if total <= 0:
+        return 0
     rest = total
     num_coins = 0
     while rest != 0:
