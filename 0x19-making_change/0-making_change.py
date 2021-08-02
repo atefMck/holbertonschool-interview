@@ -4,7 +4,7 @@
 
 def makeChange(coins, total):
     ''' boooooo '''
-    if total <= 0:
+    if total <= 0 or len(coins) <= 0:
         return 0
     rest = total
     num_coins = 0
