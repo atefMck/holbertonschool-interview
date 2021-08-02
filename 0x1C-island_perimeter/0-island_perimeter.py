@@ -5,6 +5,9 @@
 
 
 def island_perimeter(grid):
+    """
+    0-main
+    """
     perimeter = 0
     for i in range(len(grid)):
         for j in range(len(grid[i])):
