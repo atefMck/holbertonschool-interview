@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "sort.h"
+#include <string.h>
 
 /**
  * getmax - Get maximum of array
@@ -41,8 +42,7 @@ void counting_sort(int *array, size_t size, size_t sig)
 	if (!copy)
 	return;
 
-	for (i = 0; i < size; i++)
-	copy[i] = array[i];
+	memcpy(copy, array, sizeof(int) * size);
 
 	for (i = 0; i < size; i++)
 	{
@@ -55,9 +55,7 @@ void counting_sort(int *array, size_t size, size_t sig)
 	for (i = 0; i < 10; i++)
 	{
 		if (i != 0)
-		{
-			base[i] += base[i - 1];
-		}
+		base[i] += base[i - 1];
 	}
 
 	for (j = (int) size; j >= 0; j--)
@@ -65,9 +63,8 @@ void counting_sort(int *array, size_t size, size_t sig)
 		array[base[digit[j]] - 1] = copy[j];
 		base[digit[j]]--;
 	}
-	free(digit);
 	free(copy);
-
+	free(digit);
 }
 
 /**
